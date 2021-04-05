@@ -6,17 +6,20 @@
 			{
 				"name": "alice",
 				"wsPort": 9944,
-				"port": 30444
+				"port": 30444,
+				"flags": ["--ws-external", "--rpc-external", "--rpc-cors=all"]
 			},
 			{
 				"name": "bob",
 				"wsPort": 9955,
-				"port": 30555
+				"port": 30555,
+				"flags": ["--ws-external", "--rpc-external", "--rpc-cors=all"]
 			},
 			{
 				"name": "charlie",
 				"wsPort": 9966,
-				"port": 30666
+				"port": 30666,
+				"flags": ["--ws-external", "--rpc-external", "--rpc-cors=all"]
 			}
 		]
 	},
@@ -27,7 +30,7 @@
 			"wsPort": 9988,
 			"port": 31200,
 			"balance": "1000000000000000000000",
-			"flags": ["--", "--execution=wasm"]
+			"flags": ["--", "--execution=wasm", "--ws-external", "--rpc-external", "--rpc-cors=all"]
 		},
 		{
 			"bin": "./bin/rococo-collator",
@@ -35,7 +38,7 @@
 			"wsPort": 9999,
 			"port": 31300,
 			"balance": "1000000000000000000000",
-			"flags": ["--", "--execution=wasm"]
+			"flags": ["--", "--execution=wasm", "--ws-external", "--rpc-external", "--rpc-cors=all"]
 		}
 	],
 	"simpleParachains": [
