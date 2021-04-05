@@ -1,14 +1,10 @@
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# replace source.list
-RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
-ADD ./dockerfile.d/aliyun.source.conf /etc/apt/sources.list
-
 # install dependencies
-RUN apt update && apt upgrade -y && apt install -y autoconf automake build-essential cmake curl dpkg-dev expect  gcc-8 gdb git git-core libcurl4-openssl-dev libssl-dev libtool pkg-config vim wget software-properties-common apt-utils binutils-dev
+RUN apt update && apt upgrade -y && apt install -y autoconf automake bison build-essential cmake curl dpkg-dev expect flex gcc g++ gdb git git-core gnupg kmod libboost-system-dev libboost-thread-dev libcurl4-openssl-dev libiptcdata0-dev libjsoncpp-dev liblog4cpp5-dev libprotobuf-dev libssl-dev libtool libxml2-dev ocaml ocamlbuild pkg-config protobuf-compiler python sudo systemd-sysv texinfo uuid-dev vim wget software-properties-common lsb-release apt-utils binutils-dev
 
 # config llvm
 ADD ./dockerfile.d/install-llvm.sh /root
@@ -24,13 +20,14 @@ RUN /root/.cargo/bin/rustup target add wasm32-unknown-unknown --toolchain ${rust
 ENV PATH=$PATH:$HOME/.cargo/bin
 
 # config node
-RUN apt install nodejs
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN apt install -y nodejs
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt update && apt install yarn
+RUN apt update && apt install -y yarn
 
 # run validators and collators
-ADD ./polkadot-launch /root
+ADD ./polkadot-launch /root/polkadot-launch
 
 WORKDIR /root
 
