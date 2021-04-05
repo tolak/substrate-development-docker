@@ -48,6 +48,56 @@ export async function getHeader(api: ApiPromise) {
 	return genesis_header.toHex();
 }
 
+// Register as parathread, would not onboard as parachain. So we can test 
+// auction and crowdloan
+export async function registerParathread(
+	api: ApiPromise,
+	id: string,
+	wasm: string,
+	header: string,
+	finalization: boolean = false,
+){
+	return new Promise<void>(async (resolvePromise, reject) => {
+		await cryptoWaitReady();
+
+		const keyring = new Keyring({ type: "sr25519" });
+		const alice = keyring.addFromUri("//Alice");
+
+		console.log(
+			`--- Submitting extrinsic to register parathread ${id}. (nonce: ${nonce}) ---`
+		);
+		const unsub = await api.tx.registrar.register(
+			api.createType('Compact<U32>', parseInt(id)),
+			header,
+			wasm
+		)
+		.signAndSend(alice, { nonce: nonce, era: 0 }, (result) => {
+			console.log(`Current status is ${result.status}`);
+			if (result.status.isInBlock) {
+				console.log(
+					`Transaction included at blockHash ${result.status.asInBlock}`
+				);
+				if (finalization) {
+					console.log("Waiting for finalization...");
+				} else {
+					unsub();
+					resolvePromise();
+				}
+			} else if (result.status.isFinalized) {
+				console.log(
+					`Transaction finalized at blockHash ${result.status.asFinalized}`
+				);
+				unsub();
+				resolvePromise();
+			} else if (result.isError) {
+				console.log(`Transaction Error`);
+				reject(`Transaction Error`);
+			}
+		});
+		nonce += 1;
+	});
+}
+
 // Submit an extrinsic to the relay chain to register a parachain.
 // Uses the Alice account which is known to be Sudo for the relay chain.
 export async function registerParachain(

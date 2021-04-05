@@ -12,7 +12,7 @@ import {
 } from "./spawn";
 import {
 	connect,
-	registerParachain,
+	registerParathread,
 	setBalance,
 	establishHrmpChannel,
 } from "./rpc";
@@ -125,7 +125,7 @@ async function main() {
 				process.exit(1);
 			}
 
-			await registerParachain(relayChainApi, id, genesisWasm, genesisState, config.finalization);
+			await registerParathread(relayChainApi, id, genesisWasm, genesisState, config.finalization);
 
 			registeredParachains[id] = true;
 
@@ -165,7 +165,7 @@ async function main() {
 			}
 
 			console.log(`Registering Parachain ${id}`);
-			await registerParachain(relayChainApi, id, genesisWasm, genesisState, config.finalization);
+			await registerParathread(relayChainApi, id, genesisWasm, genesisState, config.finalization);
 
 			// Allow time for the TX to complete, avoiding nonce issues.
 			// TODO: Handle nonce directly instead of this.
