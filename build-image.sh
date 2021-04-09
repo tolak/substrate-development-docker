@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t nutbox-crowdloan .
+docker build -t tolak/nutbox-crowdloan .
