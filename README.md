@@ -7,9 +7,14 @@ We launched three polkadot validators and two parachains with paraid 200 and 300
 - validator1 is listen to ws port: 9944
 - validator2 is listen to ws port: 9955
 - validator3 is listen to ws port: 9966
+- validator4 is listen to ws port: 9977
+- validator5 is listen to ws port: 9988
+- validator6 is listen to ws port: 9999
 
-- parachain 200 is listen to ws port: 9988
-- parachian300 is listen to ws port: 9999
+- parachain 1001 is listen to ws port: 9111
+- parachian 1002 is listen to ws port: 9222
+- parachian 1002 is listen to ws port: 9333
+- parachian 1002 is listen to ws port: 9444
 
 > Note case binary file under polkadot-launch/bin is too large, so before build your own image contact me to get the right binary file.
 
@@ -21,7 +26,7 @@ We launched three polkadot validators and two parachains with paraid 200 and 300
 After docker installed, run
 
 ```sh
-docker pull tolak/nutbox-crowdloan
+docker pull tolak/nutbox-crowdloan:latest
 ```
 ### Or build by yourself
 
