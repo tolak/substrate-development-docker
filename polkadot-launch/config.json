@@ -20,25 +20,61 @@
 				"wsPort": 9966,
 				"port": 30666,
 				"flags": ["--ws-external", "--rpc-external", "--rpc-cors=all"]
+			},
+			{
+				"name": "dave",
+				"wsPort": 9977,
+				"port": 30777,
+				"flags": ["--ws-external", "--rpc-external", "--rpc-cors=all"]
+			},
+			{
+				"name": "eve",
+				"wsPort": 9988,
+				"port": 30888,
+				"flags": ["--ws-external", "--rpc-external", "--rpc-cors=all"]
+			},
+			{
+				"name": "ferdie",
+				"wsPort": 9999,
+				"port": 30999,
+				"flags": ["--ws-external", "--rpc-external", "--rpc-cors=all"]
 			}
+
+
 		]
 	},
 	"parachains": [
 		{
 			"bin": "./bin/rococo-collator",
-			"id": "200",
-			"wsPort": 9988,
-			"port": 31200,
+			"id": "1001",
+			"wsPort": 9111,
+			"port": 31111,
 			"balance": "1000000000000000000000",
-			"flags": ["--", "--execution=wasm", "--ws-external", "--rpc-external", "--rpc-cors=all"]
+			"flags": ["--ws-external", "--rpc-external", "--rpc-cors=all", "--", "--execution=wasm"]
 		},
 		{
 			"bin": "./bin/rococo-collator",
-			"id": "300",
-			"wsPort": 9999,
-			"port": 31300,
+			"id": "1002",
+			"wsPort": 9222,
+			"port": 32222,
 			"balance": "1000000000000000000000",
-			"flags": ["--", "--execution=wasm", "--ws-external", "--rpc-external", "--rpc-cors=all"]
+			"flags": ["--ws-external", "--rpc-external", "--rpc-cors=all", "--", "--execution=wasm"]
+		},
+		{
+			"bin": "./bin/rococo-collator",
+			"id": "1003",
+			"wsPort": 9333,
+			"port": 33333,
+			"balance": "1000000000000000000000",
+			"flags": ["--ws-external", "--rpc-external", "--rpc-cors=all", "--", "--execution=wasm"]
+		},
+		{
+			"bin": "./bin/rococo-collator",
+			"id": "1004",
+			"wsPort": 9444,
+			"port": 34444,
+			"balance": "1000000000000000000000",
+			"flags": ["--ws-external", "--rpc-external", "--rpc-cors=all", "--", "--execution=wasm"]
 		}
 	],
 	"simpleParachains": [
