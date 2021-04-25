@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t tolak/nutbox-crowdloan .
+docker build -t tolak/substrate-development:v0.0.1 .
