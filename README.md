@@ -1,18 +1,6 @@
 # Docker Container Of Substrate Development
 
-## Background
-
-We launched three polkadot validators and two parachains with paraid 1001 and 1002. The tools we use to launch the network automatically is [polkadot-launch](https://github.com/paritytech/polkadot-launch.git) with some custom configuration.
-
-- validator1 is listen to ws port: 9944
-- validator2 is listen to ws port: 9955
-- validator3 is listen to ws port: 9966
-
-- parachain 1001 is listen to ws port: 9111
-- parachian 1002 is listen to ws port: 9222
-
-> Note case binary file under polkadot-launch/bin is too large, so before build your own image contact me to get the right binary file.
-
+Substrate development environment, including start solochain and parachain.
 
 ## Download image or build image by yourself
 
@@ -21,7 +9,7 @@ We launched three polkadot validators and two parachains with paraid 1001 and 10
 After docker installed, run
 
 ```sh
-docker pull tolak/nutbox-crowdloan:latest
+docker pull tolak/substrate-development:latest
 ```
 ### Or build by yourself
 
@@ -31,25 +19,14 @@ Run script ```build-image.sh``` or give a specific image name by runing
 docker build -t <image name> .
 ```
 
+> Note case binary file under polkadot-launch/bin is too large, so before build your own image contact me to get the right binary file.
+
 ## Run docker container by executing
 
 ```sh
-docker run -it -p 127.0.0.1:9944:9944 -p 127.0.0.1:9988:9988 -p 127.0.0.1:9999:9999 --name crowdloan nutbox-crowdloan
+docker run -it -p 127.0.0.1:9944:9944 -p 127.0.0.1:9988:9988 -p 127.0.0.1:9999:9999 --name substrate tolak/substrate-development
 ```
 
-## Launch parachain test network(same as Rococo)
+## Run Parachains
 
-```sh
-cd polkadot-launch
-yarn && yarn start config.json
-```
-
-This would automatically run three validators and register parachain 1001 and parachain 1002 as parathread. We can create auction and start crowdloan later.
-
-## Connect to node with polkadot.js
-
-- Browser [validator1](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9944)
-
-- Browser [parachain 1001](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9988)
-
-- Browser [parachain 1002](https://polkadot.js.org/apps/?rpc=ws%3A%2F%2F127.0.0.1%3A9999)
+See [here](./run-parachains.md)
