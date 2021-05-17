@@ -1,0 +1,3 @@
+[submodule "polkadot-launch"]
+	path = polkadot-launch
+	url = https://github.com/nutbox-dao/polkadot-launch.git
