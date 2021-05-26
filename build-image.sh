@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build -t tolak/substrate-development:v0.0.3 .
+docker build -t tolak/substrate-development:v0.0.4 .
