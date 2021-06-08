@@ -9,7 +9,7 @@ We launched three polkadot validators and two parachains with paraid 1001 and 10
 Execute command
 
 ```sh
-docker run -it -p 127.0.0.1:9944:9944 -p 127.0.0.1:9988:9988 -p 127.0.0.1:9999:9999 --name parachains tolak/substrate-development:v0.1.2
+docker run -it -p 127.0.0.1:9944:9944 -p 127.0.0.1:9988:9988 -p 127.0.0.1:9999:9999 --name parachains tolak/substrate-development:v0.1.3
 ```
 
 ## Start Validators and Parachains
