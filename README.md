@@ -9,7 +9,7 @@ Substrate development environment, including start solochain and parachain.
 After docker installed, run
 
 ```sh
-docker pull tolak/substrate-development:v0.2.0
+docker pull tolak/substrate-development:v0.3.0
 ```
 ### Or build by yourself
 
@@ -24,7 +24,7 @@ docker build -t <image name> .
 ## Run docker container by executing
 
 ```sh
-docker run -it -p 127.0.0.1:9944:9944 -p 127.0.0.1:9988:9988 -p 127.0.0.1:9999:9999 --name substrate tolak/substrate-development:v0.2.0
+docker run -it -p 127.0.0.1:9944:9944 -p 127.0.0.1:9988:9988 -p 127.0.0.1:9999:9999 --name substrate tolak/substrate-development:v0.3.0
 ```
 
 ## Run Parachains
