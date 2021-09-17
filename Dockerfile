@@ -4,7 +4,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # install dependencies
-RUN apt update && apt upgrade -y && apt install -y autoconf automake bison build-essential cmake curl dpkg-dev expect flex gcc g++ gdb git git-core gnupg kmod libboost-system-dev libboost-thread-dev libcurl4-openssl-dev libiptcdata0-dev libjsoncpp-dev liblog4cpp5-dev libprotobuf-dev libssl-dev libtool libxml2-dev ocaml ocamlbuild pkg-config protobuf-compiler python sudo systemd-sysv texinfo uuid-dev vim wget software-properties-common lsb-release apt-utils binutils-dev
+RUN apt-get update -y && apt-get upgrade -y && apt-get install -y autoconf automake bison build-essential cmake curl dpkg-dev expect flex gcc g++ gdb git git-core gnupg kmod libboost-system-dev libboost-thread-dev libcurl4-openssl-dev libiptcdata0-dev libjsoncpp-dev liblog4cpp5-dev libprotobuf-dev libssl-dev libtool libxml2-dev ocaml ocamlbuild pkg-config protobuf-compiler python sudo systemd-sysv texinfo uuid-dev vim ca-certificates wget software-properties-common lsb-release apt-utils binutils-dev
 
 # config llvm
 ADD ./dockerfile.d/install-llvm.sh /root
