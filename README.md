@@ -24,9 +24,6 @@ docker build -t <image name> .
 ## Run docker container by executing
 
 ```sh
-docker run -it -p 127.0.0.1:9944:9944 -p 127.0.0.1:9988:9988 -p 127.0.0.1:9999:9999 --name substrate tolak/substrate-development:v0.5.0
+docker run -it -p 127.0.0.1:9944:9944 --name substrate tolak/substrate-development:v0.5.0
 ```
 
-## Run Parachains
-
-See [here](./run-parachains.md)

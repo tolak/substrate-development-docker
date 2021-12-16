@@ -11,7 +11,7 @@ ADD ./dockerfile.d/install-llvm.sh /root
 RUN bash /root/install-llvm.sh
 
 # config rust toolchain
-ENV rust_toolchain  nightly-2021-03-25
+ENV rust_toolchain  nightly-2021-11-11
 ADD ./dockerfile.d/install-rust.sh /root
 RUN bash /root/install-rust.sh
 RUN /root/.cargo/bin/rustup install ${rust_toolchain}
@@ -26,12 +26,10 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 RUN apt update && apt install -y yarn
 
-# run validators and collators
-ADD ./polkadot-launch /root/polkadot-launch
-
 WORKDIR /root
 
 # validators
+EXPOSE 19944
 EXPOSE 9944
 EXPOSE 9955
 EXPOSE 9966
@@ -39,8 +37,3 @@ EXPOSE 9977
 EXPOSE 9988
 EXPOSE 9999
 
-# collators
-EXPOSE 9111
-EXPOSE 9222
-EXPOSE 9333
-EXPOSE 9444
