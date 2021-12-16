@@ -1,6 +1,6 @@
 # Docker Container Of Substrate Development
 
-Substrate development environment, including start solochain and parachain.
+A pure substrate development environment, with rust and node environment configured.
 
 ## Download image or build image by yourself
 
@@ -9,7 +9,7 @@ Substrate development environment, including start solochain and parachain.
 After docker installed, run
 
 ```sh
-docker pull tolak/substrate-development:v0.5.0
+docker pull tolak/substrate-development:v0.6.0
 ```
 ### Or build by yourself
 
@@ -19,11 +19,8 @@ Run script ```build-image.sh``` or give a specific image name by runing
 docker build -t <image name> .
 ```
 
-> Note case binary file under polkadot-launch/bin is too large, so before build your own image contact me to get the right binary file.
-
 ## Run docker container by executing
 
 ```sh
-docker run -it -p 127.0.0.1:9944:9944 --name substrate tolak/substrate-development:v0.5.0
+docker run -it -p 127.0.0.1:9944:9944 -p 127.0.0.1:9955:9955 -v <local substrate workspace>:<container workspace> --name substrate tolak/substrate-development:v0.6.0
 ```
-
