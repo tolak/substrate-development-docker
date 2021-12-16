@@ -20,11 +20,9 @@ RUN /root/.cargo/bin/rustup target add wasm32-unknown-unknown --toolchain ${rust
 ENV PATH=$PATH:$HOME/.cargo/bin
 
 # config node
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt install -y nodejs
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt update && apt install -y yarn
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt -y install nodejs \
+    && npm install --global yarn typescript
 
 WORKDIR /root
 
