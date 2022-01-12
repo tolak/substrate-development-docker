@@ -26,12 +26,5 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
 
 WORKDIR /root
 
-# validators
-EXPOSE 19944
-EXPOSE 9944
-EXPOSE 9955
-EXPOSE 9966
-EXPOSE 9977
-EXPOSE 9988
-EXPOSE 9999
-
+# export ports
+EXPOSE 9000-20000
