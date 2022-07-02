@@ -11,7 +11,7 @@ ADD ./dockerfile.d/install-llvm.sh /root
 RUN bash /root/install-llvm.sh
 
 # config rust toolchain
-ENV rust_toolchain  nightly-2021-11-11
+ENV rust_toolchain  nightly-2022-04-01
 ADD ./dockerfile.d/install-rust.sh /root
 RUN bash /root/install-rust.sh
 RUN /root/.cargo/bin/rustup install ${rust_toolchain}
