@@ -24,6 +24,9 @@ RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - \
     && apt -y install nodejs \
     && npm install --global yarn typescript
 
+# add polkadot-launch & binary
+ADD ./polkadot-launch /root
+
 WORKDIR /root
 
 # export ports
