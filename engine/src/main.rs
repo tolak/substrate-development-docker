@@ -1,9 +1,8 @@
 mod cli;
 
-use clap::{Error as ClapError, Parser};
+use clap::Parser;
 use cli as engine_cli;
 use docker_api::{api::ContainerCreateOpts, Docker, Result as DockerResult};
-use std::process::Command;
 
 #[cfg(unix)]
 pub fn new_docker() -> DockerResult<Docker> {
@@ -25,10 +24,14 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     } else {
         ContainerCreateOpts::builder(args.image).build()
     };
-    match docker.containers().create(&opts).await {
-        Ok(info) => println!("{:?}", info),
-        Err(e) => eprintln!("Error: {}", e),
-    }
+
+    tokio::task::spawn(async move {
+        match docker.containers().create(&opts).await {
+            Ok(info) => println!("{:?}", info),
+            Err(e) => eprintln!("Error: {}", e),
+        }
+    });
+
 
     Ok(())
 }
