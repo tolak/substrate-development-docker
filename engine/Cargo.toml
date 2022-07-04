@@ -4,4 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-clap = { version = "3.2.8", features = ["derive"] }
+clap = { version = "3.1.17", features = ["derive"] }
+docker-api = { version = "0.9.1", features = ["tls"] }
+tokio = { version= "1.19.2", features=["full"] }

@@ -1,26 +1,34 @@
 mod cli;
 
+use clap::{Error as ClapError, Parser};
 use cli as engine_cli;
+use docker_api::{api::ContainerCreateOpts, Docker, Result as DockerResult};
 use std::process::Command;
 
-fn main() {
-    let mut command = String::from("docker ");
-    let args = engine_cli::parse_args().expect("Parse command f");
-    command.push_str(&args);
-    println!("Command line to be executed: {:?}", &command);
+#[cfg(unix)]
+pub fn new_docker() -> DockerResult<Docker> {
+    Ok(Docker::unix("/var/run/docker.sock"))
+}
 
-    let output = if cfg!(target_os = "windows") {
-        Command::new("cmd")
-            .args(["/C", &command])
-            .spawn()
-            .expect("failed to execute process")
+#[cfg(not(unix))]
+pub fn new_docker() -> Result<Docker> {
+    Docker::new("tcp://127.0.0.1:8080")
+}
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let args = engine_cli::Cli::try_parse().expect("Invalid commands");
+    let docker = new_docker()?;
+
+    let opts = if let Some(name) = args.name {
+        ContainerCreateOpts::builder(args.image).name(name).build()
     } else {
-        Command::new("sh")
-            .arg("-c")
-            .arg(&command)
-            .spawn()
-            .expect("failed to execute process")
+        ContainerCreateOpts::builder(args.image).build()
     };
+    match docker.containers().create(&opts).await {
+        Ok(info) => println!("{:?}", info),
+        Err(e) => eprintln!("Error: {}", e),
+    }
 
-    println!("Output: ${:?}, ", output);
+    Ok(())
 }
