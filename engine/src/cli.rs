@@ -29,6 +29,5 @@ pub fn parse_args() -> Result<String, ClapError> {
     // Parse name of docker images
     args.push_str(&format!(" {}", input.image));
 
-    println!("args: {:?}", args);
     Ok(args)
 }
