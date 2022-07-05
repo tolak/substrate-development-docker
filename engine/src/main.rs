@@ -1,37 +1,59 @@
 mod cli;
 
+use bollard::{
+    container::{Config, CreateContainerOptions, StartContainerOptions},
+    image::CreateImageOptions,
+    Docker,
+};
 use clap::Parser;
 use cli as engine_cli;
-use docker_api::{api::ContainerCreateOpts, Docker, Result as DockerResult};
+use futures_util::TryStreamExt;
+use std::default::Default;
 
-#[cfg(unix)]
-pub fn new_docker() -> DockerResult<Docker> {
-    Ok(Docker::unix("/var/run/docker.sock"))
-}
-
-#[cfg(not(unix))]
-pub fn new_docker() -> Result<Docker> {
-    Docker::new("tcp://127.0.0.1:8080")
-}
+const IMAGE: &str = "onfinality/subql-query";
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = engine_cli::Cli::try_parse().expect("Invalid commands");
-    let docker = new_docker()?;
+    let bollard_docker =
+        Docker::connect_with_local_defaults().expect("failed to connect docker daemon");
 
     let opts = if let Some(name) = args.name {
-        ContainerCreateOpts::builder(args.image).name(name).build()
+        Some(CreateContainerOptions { name })
     } else {
-        ContainerCreateOpts::builder(args.image).build()
+        Some(CreateContainerOptions {
+            name: String::from("default-name"),
+        })
+    };
+    let config = Config {
+        image: Some(IMAGE),
+        cmd: None,
+        ..Default::default()
     };
 
-    tokio::task::spawn(async move {
-        match docker.containers().create(&opts).await {
-            Ok(info) => println!("{:?}", info),
-            Err(e) => eprintln!("Error: {}", e),
-        }
-    });
+    bollard_docker
+        .create_image(
+            Some(CreateImageOptions {
+                from_image: IMAGE,
+                ..Default::default()
+            }),
+            None,
+            None,
+        )
+        .try_collect::<Vec<_>>()
+        .await?;
+    let id = bollard_docker
+        .create_container(opts.clone(), config)
+        .await?
+        .id;
+    let _ = &bollard_docker
+        .start_container(&id, None::<StartContainerOptions<String>>)
+        .await?;
 
+    // let container_task = tokio::task::spawn(async move {
+
+    // });
+    // container_task.await.expect("container task has panicked");
 
     Ok(())
 }

@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+bollard = "0.13.0"
+futures-util = "0.3"
 clap = { version = "3.1.17", features = ["derive"] }
-docker-api = { version = "0.9.1", features = ["tls"] }
 tokio = { version= "1.19.2", features=["full"] }
